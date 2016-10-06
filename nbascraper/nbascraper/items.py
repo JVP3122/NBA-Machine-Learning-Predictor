@@ -43,7 +43,7 @@ class NbascraperItem(scrapy.Item):
 	away_tov = scrapy.Field()
 	away_pf = scrapy.Field()
 	away_ts = scrapy.Field()
-	away_eft = scrapy.Field()
+	away_efg = scrapy.Field()
 
 	home_score = scrapy.Field()
 	away_score = scrapy.Field()
