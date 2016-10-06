@@ -16,8 +16,8 @@ class NBAScraperSpider(scrapy.Spider):
 	name = "pbr"
 	allowed_domains = ['basketball-reference.com']
 	def start_requests(self):
-		months = ['october','november']#,'december','january','february','march','april','may','june']
-		for year in range(2001,2002):
+		months = ['october','november','december','january','february','march','april','may','june']
+		for year in range(2013,2017):
 			for month in months:
 				yield scrapy.Request("http://www.basketball-reference.com/leagues/NBA_"+str(year)+"_games-"+month+".html", self.parse)
 		# yield scrapy.Request("http://www.pro-football-reference.com/years/2015/games.htm", self.parse)
