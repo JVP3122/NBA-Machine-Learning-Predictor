@@ -60,7 +60,7 @@ model_columns = df.drop(['home_team','away_team','game_date','home_score','away_
 X = pd.DataFrame(columns = model_columns)
 X[model_columns] = training_set[model_columns]
 
-y = np.array(training_set.home_score - training_set.away_score)
+y = np.array(np.where(training_set.home_score > training_set.away_score,1,0))
 
 scaler = preprocessing.StandardScaler().fit(X)
 X = scaler.transform(X)
@@ -71,7 +71,7 @@ X_train, X_test, y_train, y_test = cross_validation.train_test_split(X,y,test_si
 # C_val = 0
 
 # for c in C_vec:
-clf = svm.SVR(C=0.03,kernel='linear')#linear_model.LogisticRegression(random_state=42)
+# clf = svm.SVR(C=0.03,kernel='linear')#linear_model.LogisticRegression(random_state=42)
 # 	# clf = clf.fit(X,y)
 # 	clf = clf.fit(X_train,y_train)
 # 	prob_result = clf.score(X_test,y_test)
@@ -80,20 +80,23 @@ clf = svm.SVR(C=0.03,kernel='linear')#linear_model.LogisticRegression(random_sta
 #     	C_val = c
 # 	print 'C =',c,'Score = ',prob_result
 
-rfe = RFE(estimator=clf)
-rfe = rfe.fit(X_train,y_train)
-print rfe.score(X_test,y_test)
+clf = linear_model.LogisticRegression(C=3,random_state=23)
+clf = clf.fit(X_train,y_train)
+print clf.score(X_test,y_test)
+
+print 'Hit Enter to Continue...'
+raw_input()
+print clf.predict_proba(X_test)
+print y_test
 
 # reg = linear_model.ElasticNet(alpha=.0001,max_iter=1000000000)
 # reg = reg.fit(X_train,y_train)
 # print reg.score(X_test,y_test)
 
-# print reg.predict(X_test)
-# print y_test
 # *************************************************************************"""
 
 """ Testing for 2015-2016 Season"""
-# """*********************************************************************
+"""*********************************************************************
 # Create dataset to be used for prediction
 predicting_set = df[df.game_date >= cutoff_date].set_index('game_date')
 predicting_set = predicting_set.sort_index()    # Sort ascending by index
@@ -219,4 +222,4 @@ print 'Total losses:',-(result[result['win_loss']==-1].sum())['win_loss']
 
 # print result
 # print averages
-# *************************************************************************"""
+*************************************************************************"""
